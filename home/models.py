@@ -31,4 +31,4 @@ class BlogArticle(models.Model):
     class Meta:
         verbose_name = "Статья"
         verbose_name_plural = "Статьи"
-        ordering = ["-time_publication"]
+        ordering = ["time_publication"]

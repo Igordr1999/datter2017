@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="uk-container uk-margin-medium">
-	<h1 class="uk-title uk-text-center uk-text-primary">Блог сайта</h1>
+    <h1 class="uk-title uk-text-center uk-text-primary"><a href="{% url 'blog' %}">Блог сайта</a></h1>
 		<div class="uk-child-width-1-2@m uk-padding uk-grid" uk-grid class="uk-flex-center">
             {% for article in all_articles %}
 		    <div>
@@ -11,7 +11,7 @@
 		                <a href="#"><img src="{{ MEDIA_URL }}{{ article.preview_photo }}" alt=""></a>
 		            </div>
 		            <div class="uk-card-body">
-		                <h3 class="uk-card-title"><a href="#">{{ article.title }}</a></h3>
+		                <h3 class="uk-card-title"><a href="article/{{ article.id }}">{{ article.title }}</a></h3>
 		                <p>{{ article.preview_text }}</p>
 		            </div>
 		        </div>

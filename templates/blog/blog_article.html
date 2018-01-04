@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="uk-section uk-section-default">
+            <div class="uk-container">
+
+                <div uk-grid="" class="uk-grid">
+                    <div class="uk-width-2-3@m uk-first-column">
+                        <article class="uk-article">
+                            <h1 class="uk-article-title"><a class="uk-link-reset" href="#">{{ article.title }}</a></h1>
+                            <hr class="uk-divider-small">
+                            <p class="uk-text">{{ article.preview_text }}</p>
+                            <p class="uk-article-meta">Автор -
+                                <a href="#">{{ article.author }}.</a>
+                                <a href="#">Время публикации: {{ article.time_publication }}</a>
+                            </p>
+                            <hr class="uk-divider-icon uk-margin-medium">
+                        </article>
+                    </div>
+                </div>
+            </div>
+</div>
+{% endblock %}

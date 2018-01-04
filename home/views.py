@@ -17,3 +17,8 @@ def terms(request):
 
 def personal_data_policy(request):
     return render(request, 'personal_data_policy.html', {})
+
+
+def blog_article(request, num):
+    article = BlogArticle.objects.get(id=num)
+    return render(request, 'blog/blog_article.html', {'article': article})
