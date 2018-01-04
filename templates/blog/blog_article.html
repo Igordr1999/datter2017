@@ -3,17 +3,26 @@
 {% block content %}
 <div class="uk-section uk-section-default">
             <div class="uk-container">
-
+            <ul class="uk-breadcrumb">
+                        <li><a href="{% url 'home' %}">Datter</a></li>
+                        <li><a href="{% url 'blog' %}">Блог</a></li>
+                        <li class="uk-disabled"><a href="#">{{ article.section }}</a></li>
+                        <li><span class="uk-disabled" href="#">{{ article.title }}</span></li>
+                    </ul>
                 <div uk-grid="" class="uk-grid">
-                    <div class="uk-width-2-3@m uk-first-column">
+                    <div class="uk-width-1-1 uk-first-column">
                         <article class="uk-article">
-                            <h1 class="uk-article-title"><a class="uk-link-reset" href="#">{{ article.title }}</a></h1>
-                            <hr class="uk-divider-small">
-                            <p class="uk-text">{{ article.preview_text }}</p>
-                            <p class="uk-article-meta">Автор -
+                            <h1 class="uk-article-title">{{ article.title }}</h1>
+                            <strong class="uk-article-meta">Автор -
                                 <a href="#">{{ article.author }}.</a>
-                                <a href="#">Время публикации: {{ article.time_publication }}</a>
-                            </p>
+                                Время публикации: {{ article.time_publication }}
+                            </strong>
+                            <hr class="uk-divider-small">
+                            <div class="fr-view">
+                                {% autoescape off%}
+                                    {{ article.content }}
+                                {% endautoescape %}
+                            </div>
                             <hr class="uk-divider-icon uk-margin-medium">
                         </article>
                     </div>

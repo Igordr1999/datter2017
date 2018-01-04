@@ -8,10 +8,10 @@
 		    <div>
 		        <div class="uk-card uk-card-default">
 		            <div class="uk-card-media-top">
-		                <a href="#"><img src="{{ MEDIA_URL }}{{ article.preview_photo }}" alt=""></a>
+		                <a href="{% url 'blog_article' article.id %}"><img src="{{ MEDIA_URL }}{{ article.preview_photo }}" alt=""></a>
 		            </div>
 		            <div class="uk-card-body">
-		                <h3 class="uk-card-title"><a href="article/{{ article.id }}">{{ article.title }}</a></h3>
+		                <h3 class="uk-card-title"><a href="{% url 'blog_article' article.id %}">{{ article.title }}</a></h3>
 		                <p>{{ article.preview_text }}</p>
 		            </div>
 		        </div>

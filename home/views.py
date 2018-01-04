@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from home.models import BlogArticle
+from home.models import BlogArticle, Page
 
 
 def home(request):
@@ -22,3 +22,8 @@ def personal_data_policy(request):
 def blog_article(request, num):
     article = BlogArticle.objects.get(id=num)
     return render(request, 'blog/blog_article.html', {'article': article})
+
+
+def page(request):
+    f = Page.objects.all()
+    return render(request,'page.html', {'f':f})

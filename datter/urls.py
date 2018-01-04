@@ -18,10 +18,12 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from home import views
+from django.conf.urls import include
 
 urlpatterns = [
+    path('froala_editor/', include('froala_editor.urls')),
+    path('page/', views.page, name="page"),
     path('admin/', admin.site.urls),
-
     # home
     path('', views.home, name="home"),
     path('blog/', views.blog, name="blog"),
