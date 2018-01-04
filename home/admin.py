@@ -1,3 +1,6 @@
 from django.contrib import admin
+from home.models import Section, BlogArticle
 
-# Register your models here.
+
+admin.site.register(Section)
+admin.site.register(BlogArticle)

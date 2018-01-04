@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uk-position-relative uk-visible-toggle uk-light " uk-slideshow="animation: fade; autoplay: true; autoplayInterval: 7000">
+
+    <ul class="uk-slideshow-items">
+        <a href="#">
+            <li>
+                <img src="{% static 'img/promo1.jpg' %}" alt="" uk-cover>
+            </li>
+        </a>
+        <a href="#">
+            <li>
+                <img src="{% static 'img/promo2.jpg' %}" alt="" uk-cover>
+            </li>
+        </a>
+        <a href="#">
+            <li>
+                <img src="{% static 'img/promo3.jpg' %}" alt="" uk-cover>
+            </li>
+        </a>
+        <a href="#">
+            <li>
+                <img src="{% static 'img/promo4.jpg' %}" alt="" uk-cover>
+            </li>
+        </a>
+    </ul>
+
+
+    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+
+</div>
+<div id="search_block">
+    <div id="search_block_header" uk-grid>
+        <div class="uk-width-1-1">
+            <ul uk-tab>
+                <li><a href="#">Авиабилеты</a></li>
+                <li><a href="#">Отели</a></li>
+                <li><a href="#">Аренда авто</a></li>
+            </ul>
+
+            <ul class="uk-switcher">
+                <li>
+                    <div uk-grid>
+                    <div class="uk-width-1-1 uk-padding">
+                    <form action="https://echo.htmlacademy.ru">
+
+                        <select class="ui search dropdown uk-width-1-6" id="select1" name="from" autocomplete="off" required>
+                            <option value="">Откуда летим</option>
+                            <option value="MOW">Москва, Россия</option>
+                            <option value="NYC">Нью-Йорк, США</option>
+                            <option value="BER">Берлин, Германия</option>
+                            <option value="VIE">Вена, Австрия</option>
+                            <option value="AYT">Анталия, Турция</option>
+                            <option value="PRG">Прага, Чехия</option>
+                            <option value="CGN">Кельн, Германия</option>
+                            <option value="BUD">Будапешт, Венгрия</option>
+                            <option value="PAR">Париж, Франция</option>
+                            <option value="HER">Крит, Греция</option>
+                            <option value="LCA">Ларнака, Кипр</option>
+                            <option value="ZAG">Загреб, Хорватия</option>
+                            <option value="ZRH">Цюрих, Швейцария</option>
+                        </select>
+
+                        <select class="ui search dropdown uk-width-1-6" id="select2" name="to" autocomplete="off" required>
+                            <option value="">Куда летим</option>
+                            <option value="MOW">Москва, Россия</option>
+                            <option value="NYC">Нью-Йорк, США</option>
+                            <option value="BER">Берлин, Германия</option>
+                            <option value="VIE">Вена, Австрия</option>
+                            <option value="AYT">Анталия, Турция</option>
+                            <option value="PRG">Прага, Чехия</option>
+                            <option value="CGN">Кельн, Германия</option>
+                            <option value="BUD">Будапешт, Венгрия</option>
+                            <option value="PAR">Париж, Франция</option>
+                            <option value="HER">Крит, Греция</option>
+                            <option value="LCA">Ларнака, Кипр</option>
+                            <option value="ZAG">Загреб, Хорватия</option>
+                            <option value="ZRH">Цюрих, Швейцария</option>
+                        </select>
+                        <div id="rangestart">
+                            <input type="text" class="uk-input uk-width-1-6" id="from_date" placeholder="Когда улетаем" name="from_date" autocomplete="off" required>
+                        </div>
+                        <div id="rangeend">
+                            <input type="text" class="uk-input uk-width-1-6" id="to_date" placeholder="Когда возвращаемся" name="to_date" autocomplete="off" required>
+                        </div>
+
+                        <div class="uk-inline">
+                            <input type="text" class="uk-input" value="1 пассажир, Эконом" id="ressum" readonly>
+                            <div uk-dropdown="mode: click">
+                                <div class="uk-text-center">Кол-во пассажиров:</div>
+                                <div class="amount">
+                                    <i>Взрослых(от 12 лет):</i>
+                                    <span class="down">-</span>
+                                    <input type="text" value="1" name="man" id="am1" class="num_input" autocomplete="off" readonly>
+                                    <span class="up">+</span>
+                                </div>
+                                <div class="amount">
+                                    <i>Детей (до 12 лет):</i>
+                                    <br>
+                                    <span class="down">-</span>
+                                    <input type="text" value="0" name="children" id="am2" class="num_input" autocomplete="off" readonly>
+                                    <span class="up">+</span>
+                                </div>
+                                <div class="amount">
+                                    <i>Младенцев (до 2 лет):</i>
+                                    <span class="down">-</span>
+                                    <input type="text" value="0" name="baby" id="am3" class="num_input" autocomplete="off" readonly>
+                                    <span class="up">+</span>
+                                </div>
+                                <div class="uk-text-center">Класс полета:</div>
+                                <div class="Suk-grid-small uk-child-width-auto uk-grid">
+                                    <label><input class="uk-radio" type="radio" id = "status1" name="status" value="Эконом" autocomplete="off" checked >  Эконом класс</label>
+                                    <label><input class="uk-radio" type="radio" id = "status2" name="status" value="Бизнес" autocomplete="off">  Бизнес класс</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="uk-button uk-button-default uk-input uk-width-1-6" id="search">Найти</button>
+                    </form>
+                    </div>
+                    </div>
+                </li>
+                <li>
+                    <div uk-grid>
+                    <div class="uk-width-1-1 uk-padding">
+                        <form action="https://echo.htmlacademy.ru">
+                        <select class="ui search dropdown uk-width-1-5" id="select3" name="from" autocomplete="off" required>
+                            <option value="">Название города или отеля</option>
+                            <option value="MOW">Москва, Россия</option>
+                            <option value="NYC">Нью-Йорк, США</option>
+                            <option value="BER">Берлин, Германия</option>
+                            <option value="VIE">Вена, Австрия</option>
+                            <option value="AYT">Анталия, Турция</option>
+                            <option value="PRG">Прага, Чехия</option>
+                            <option value="CGN">Кельн, Германия</option>
+                            <option value="BUD">Будапешт, Венгрия</option>
+                            <option value="PAR">Париж, Франция</option>
+                            <option value="HER">Крит, Греция</option>
+                            <option value="LCA">Ларнака, Кипр</option>
+                            <option value="ZAG">Загреб, Хорватия</option>
+                            <option value="ZRH">Цюрих, Швейцария</option>
+
+                        </select>
+                        <div id="rangestart1">
+                            <input type="text" class="uk-input uk-width-1-5" id="from_date1" placeholder="Дата заезда" name="from_date" autocomplete="off" required>
+                        </div>
+                        <div id="rangeend1">
+                            <input type="text" class="uk-input uk-width-1-5" id="to_date1" placeholder="Дата выезда" name="to_date" autocomplete="off" required>
+                        </div>
+
+                        <div class="uk-inline">
+                            <input type="text" class="uk-input" value="1 гость" id="ressum1" readonly>
+                            <div uk-dropdown="mode: click">
+                                <div class="uk-text-center">Кол-во гостей:</div>
+                                <div class="amount">
+                                    <i>Взрослых (> 12 лет):</i>
+                                    <span class="down1">-</span>
+                                    <input type="text" value="1" name="man" id="am4" class="num_input" autocomplete="off" readonly>
+                                    <span class="up1">+</span>
+                                </div>
+                                <div class="amount">
+                                    <i>Детей (< 12 лет):</i>
+                                    <br>
+                                    <span class="down1">-</span>
+                                    <input type="text" value="0" name="children" id="am5" class="num_input" autocomplete="off" readonly>
+                                    <span class="up1">+</span>
+                                </div>
+                                <div class="amount">
+                                    <i>Младенцев (< 2 лет):</i>
+                                    <span class="down1">-</span>
+                                    <input type="text" value="0" name="baby" id="am6" class="num_input" autocomplete="off" readonly>
+                                    <span class="up1">+</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="uk-button uk-button-default uk-input uk-width-1-5" id="search1">Найти</button>
+                    </form>
+                    </div>
+                    </div>
+                </li>
+                <li>
+                    <div uk-grid>
+                    <div class="uk-width-1-1 uk-padding">
+                        <form action="https://echo.htmlacademy.ru">
+                        <select class="ui search dropdown uk-width-1-5" id="select4" name="from" autocomplete="off" required>
+                            <option value="">Город получения</option>
+                            <option value="MOW">Москва, Россия</option>
+                            <option value="NYC">Нью-Йорк, США</option>
+                            <option value="BER">Берлин, Германия</option>
+                            <option value="VIE">Вена, Австрия</option>
+                            <option value="AYT">Анталия, Турция</option>
+                            <option value="PRG">Прага, Чехия</option>
+                            <option value="CGN">Кельн, Германия</option>
+                            <option value="BUD">Будапешт, Венгрия</option>
+                            <option value="PAR">Париж, Франция</option>
+                            <option value="HER">Крит, Греция</option>
+                            <option value="LCA">Ларнака, Кипр</option>
+                            <option value="ZAG">Загреб, Хорватия</option>
+                            <option value="ZRH">Цюрих, Швейцария</option>
+                        </select>
+                        <select class="ui search dropdown uk-width-1-5" id="select5" name="to" autocomplete="off" required>
+                            <option value="">Город возврата</option>
+                            <option value="MOW">Москва, Россия</option>
+                            <option value="NYC">Нью-Йорк, США</option>
+                            <option value="BER">Берлин, Германия</option>
+                            <option value="VIE">Вена, Австрия</option>
+                            <option value="AYT">Анталия, Турция</option>
+                            <option value="PRG">Прага, Чехия</option>
+                            <option value="CGN">Кельн, Германия</option>
+                            <option value="BUD">Будапешт, Венгрия</option>
+                            <option value="PAR">Париж, Франция</option>
+                            <option value="HER">Крит, Греция</option>
+                            <option value="LCA">Ларнака, Кипр</option>
+                            <option value="ZAG">Загреб, Хорватия</option>
+                            <option value="ZRH">Цюрих, Швейцария</option>
+                        </select>
+                        <div id="rangestart2">
+                            <input type="text" class="uk-input uk-width-1-5" id="from_date2" placeholder="Время получения" name="from_date" autocomplete="off" required>
+                        </div>
+                        <div id="rangeend2">
+                            <input type="text" class="uk-input uk-width-1-5" id="to_date2" placeholder="Время возврата" name="to_date" autocomplete="off" required>
+                        </div>
+
+                        <button class="uk-button uk-button-default uk-input uk-width-1-6" id="search2">Найти</button>
+                    </form>
+                    </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<h1 class="uk-title uk-text-center"><a href="" class="uk-link-reset">Статьи о путешествиях</a></h1>
+
+<div class="uk-child-width-1-3@m uk-padding" uk-grid>
+    <div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top">
+                <a href="#"><img src="{% static 'img/Praga.jpg' %}" alt=""></a>
+            </div>
+            <div class="uk-card-body">
+                <h3 class="uk-card-title"><a href="#">Прага, Чехия</a></h3>
+                <p>Старинная и мистическая, неповторимая и очаровательная, злата Прага – столица Чехии. На протяжении тысячелетий она росла и развивалась на пересечении торговых путей. В ее облике можно увидеть всю историю европейской архитектуры: готические замки и арки, барочные костелы и ренессансные строения, здания в стиле рококо и модерна.</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top">
+                <a href="#"><img src="{% static 'img/Keln.jpg' %}" alt=""></a>
+            </div>
+            <div class="uk-card-body">
+                <h3 class="uk-card-title"><a href="#">Кельн, Германия</a></h3>
+                <p>В этой стране каждый найдет что-то себе по вкусу: модные ночные клубы Берлина или камерные концертные залы Бремена, художественные галереи или музеи автомобилей, величественную природу или не менее величественную архитектуру. И пусть эти места находятся довольно далеко друг от друга, автобаны и развитая транспортная система позволят запросто увидеть самое интересное за один отпуск.</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top">
+                <a href="#"><img src="{% static 'img/Bud.jpg' %}" alt="" ></a>
+            </div>
+            <div class="uk-card-body">
+                <h3 class="uk-card-title"><a href="#">Будапешт, Венгрия</a></h3>
+                <p>Будапешт — красивый город с героической историей, роскошной архитектурой и экстравагантной ночной жизнью. Узнайте, что стоит посмотреть и чем заняться в столице Венгрии, где туристов катают по Дунаю на автобусах и водят на экскурсии по невидимому музею, а местные жители без опаски пьют палинку, играют в шахматы в бассейне, танцуют на крыше и ужинают в недостроях.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,130 @@
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+.amount{
+    padding: 10px 0;
+}
+
+.amount span {
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    background: #ededed;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.amount span:hover {
+    background:#dfdfdf;
+}
+
+.amount input {
+    text-align:center;
+    width: 78px;
+    height: 20px;
+    background: #ededed;
+    margin: 0;
+    border: 0;
+}
+
+.uk-input{
+    height: 50px;
+}
+
+.uk-tab{
+    margin: 0;
+}
+
+#title_info{
+    padding-top: 0;
+}
+
+#navbar{
+    height: 70px;
+    background: #fcfdfe;
+}
+
+#logo{
+    width: 150px;
+    height: 50px;
+}
+
+#search_block{
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    background: rgba(80, 80, 80, .8);
+}
+
+#ressum{
+    width: 190px;
+}
+
+#ressum1{
+    width: 220px;
+}
+
+#search_block_header{
+    padding: 0 15px;
+}
+#search, #search1, #search2{
+    background: #00ff40;
+}
+
+#rangestart, #rangeend, #rangestart1, #rangeend1, #rangestart2, #rangeend2{
+    display: inline;
+}
+
+#footer_links{
+    background: black;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.pre{
+    display: none !important;
+}
+
+.search{
+    line-height: 26px !important;
+    padding-top: 10px !important;
+    padding-bottom: 12px !important;
+    border-radius: 0 !important;
+
+}
+.search:focus{
+    border-radius: 0 !important;
+}
+
+.uk-tab>.uk-active>a {
+    color: #1e87f0;
+}
+.uk-tab>*>a:focus, .uk-tab>*>a:hover {
+    color: #39f;
+}
+
+#login_card{
+    max-width: 360px; 
+    margin-top: 120px;
+}
+
+#reg_card{
+    max-width: 500px; 
+}
+
+#terms_card{
+    max-width: 850px; 
+}
+
+.login_link{
+    margin: 0;
+}

@@ -1,0 +1,112 @@
+{% extends 'clean_base.html' %}
+{% load static %}
+
+{% block body %}
+    {% block headmenu %}
+        <nav class="uk-navbar-container" id="navbar" uk-navbar>
+            <div class="uk-navbar-left">
+                <ul class="uk-navbar-nav">
+                    <li><a href="#"><img id="logo" src="{% static 'img/d_logo3.png' %}"></a></li>
+                    <li>
+                        <a class="uk-navbar-toggle" href="#">
+                            <span uk-navbar-toggle-icon></span> <span class="uk-margin-small-left">Меню</span>
+                        </a>
+                        <div class="uk-navbar-dropdown uk-navbar-dropdown-width-4">
+                            <div class="uk-navbar-dropdown-grid uk-child-width-1-4" uk-grid>
+                                <div>
+                                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                                        <li class="uk-active uk-nav-header"><a href="#">Основные разделы</a></li>
+                                        <li><a href="#">Авиабилеты</a></li>
+                                        <li><a href="#">Отели</a></li>
+                                        <li><a href="#">Туры</a></li>
+                                        <li><a href="#">Такси</a></li>
+                                        <li><a href="#">Аренда авто</a></li>
+                                        <li><a href="#">Страховка</a></li>
+
+                                        <li class="uk-nav-divider"></li>
+                                        <li class="uk-nav-header">Спецпредложения</li>
+                                        <li><a href="#">Акции</a></li>
+                                        <li><a href="#">Сезонные скидки</a></li>
+                                        <li><a href="#">Программы лояльности</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                                        <li class="uk-active uk-nav-header"><a href="#">Подготовка к путешествию</a></li>
+                                        <li><a href="#">Куда поехать</a></li>
+                                        <li><a href="#">Статьи о городах и странах</a></li>
+                                        <li><a href="#">Визовая информация</a></li>
+                                        <li><a href="#">Справочник путешественника</a></li>
+
+                                        <li class="uk-nav-divider"></li>
+                                        <li class="uk-nav-header">Общая информация</li>
+                                        <li><a href="#">Погода</a></li>
+                                        <li><a href="#">Время</a></li>
+                                        <li><a href="#">Курсы валют</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                                        <li class="uk-active uk-nav-header"><a href="#">В аэропорту</a></li>
+                                        <li><a href="#">Онлайн-табло</a></li>
+                                        <li><a href="#">Схемы аэропортов</a></li>
+                                        <li><a href="#">Такси в аэропорт</a></li>
+                                        <li><a href="#">Аэроэкспресс</a></li>
+                                        <li><a href="#">Аэропорты и авиакомпании</a></li>
+
+                                        <li class="uk-nav-divider"></li>
+                                        <li class="uk-active uk-nav-header"><a href="#">В путешествии</a></li>
+                                        <li><a href="#">Путеводители</a></li>
+                                        <li><a href="#">Карты</a></li>
+                                        <li><a href="#">Экскурсии</a></li>
+                                        <li><a href="#">Развлечения</a></li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <ul class="uk-nav uk-navbar-dropdown-nav">
+                                        <li class="uk-active uk-nav-header"><a href="#">Развлечения</a></li>
+                                        <li><a href="#">Фотографии</a></li>
+                                        <li><a href="#">Новости</a></li>
+                                        <li><a href="#">Онлайн-трекер</a></li>
+                                        <li><a href="#">Радио</a></li>
+                                        <li><a href="#">Журналы авиакомпаний</a></li>
+                                        <li><a href="#">Игры</a></li>
+
+                                        <li class="uk-nav-divider"></li>
+                                        <li class="uk-nav-header">О сайте</li>
+                                        <li><a href="{% url 'blog' %}">Блог</a></li>
+                                        <li><a href="#">Правила</a></li>
+                                        <li><a href="#">Сотрудничество</a></li>
+                                        <li><a href="#">Разработчикам</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#">Авиабилеты</a></li>
+                    <li><a href="#">Отели</a></li>
+                    <li><a href="#">Авто</a></li>
+                    <li><a href="#">Туры</a></li>
+                </ul>
+            </div>
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li><a href="#" class="uk-icon-link" uk-icon="icon: sign-in">Войти / Регистрация</a></li>
+                </ul>
+            </div>
+        </nav>
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
+    {% block footer %}
+        <div class="uk-column-1-6 uk-padding" id="footer_links">
+            <p><a href="{% url 'home' %}">О сайте</a></p>
+            <p><a href="{% url 'blog' %}">Блог</a></p>
+            <p><a href="{% url 'terms' %}">Правила</a></p>
+            <p><a href="{% url 'personal_data_policy' %}">Сотрудничество</a></p>
+            <p><a href="#">Разработчикам</a></p>
+            <p><a href="{% url 'home' %}">DATTER.RU, 2017</a></p>
+        </div>
+    {% endblock %}
+{% endblock %}

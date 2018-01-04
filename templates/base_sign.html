@@ -1,0 +1,27 @@
+{% extends 'clean_base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="uk-background-cover" style="background-image: url({% static 'img/back1.jpg' %}); background-attachment: fixed;">
+    <div class="uk-container">
+        <div class="uk-card uk-card-default uk-width-1-1@m uk-align-center uk-margin-top uk-margin-bottom" id="terms_card">
+            <div class="uk-card-header">
+                <div uk-grid>
+                    <div class="uk-width-auto">
+                        <a href="#"><img width="135" height="45" src="{% static 'img/d_logo3.png' %}"></a>
+                    </div>
+                    <div class="uk-card-badge uk-label">{% block badge %}{% endblock %}</div>
+                </div>
+            </div>
+            {% block card_body %}
+
+            {% endblock %}
+            {% block card_footer %}
+            <div class="uk-card-footer uk-text-center">
+                <a href="{% url 'home' %}" class="uk-button uk-button-text">Вернуться на сайт</a>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}
