@@ -1,0 +1,32 @@
+{% extends 'base_blog.html' %}
+
+{% block blog_name_page %}Все темы{% endblock %}
+
+{% block blog_nav %}
+    <ul class="uk-breadcrumb">
+        <li><a href="{% url 'home' %}">Datter</a></li>
+        <li><a href="{% url 'blog' %}">Блог</a></li>
+        <li><a href="{% url 'blog' %}">Все темы</a></li>
+    </ul>
+{% endblock %}
+
+{% block blog_content %}
+                <table class="uk-table uk-table-middle uk-table-divider">
+                    <thead>
+                        <tr>
+                            <th class="uk-width-small">Название</th>
+                            <th>Описание</th>
+                            <th>Ссылка</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for section in sections %}
+                        <tr>
+                            <td>{{ section.name }}</td>
+                            <td>{{ section.description }}</td>
+                            <td><a class="uk-button uk-button-default" href="{% url 'blog_section' section.id %}">Перейти</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+{% endblock %}

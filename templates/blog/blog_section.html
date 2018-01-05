@@ -1,6 +1,14 @@
 {% extends 'base_blog.html' %}
 
-{% block blog_name_page %}Блог сайта{% endblock %}
+{% block blog_name_page %}Статьи по теме "{{ name_section }}"{% endblock %}
+
+{% block blog_nav %}
+    <ul class="uk-breadcrumb uk-padding uk-padding-remove-vertical">
+        <li><a href="{% url 'home' %}">Datter</a></li>
+        <li><a href="{% url 'blog' %}">Блог</a></li>
+        <li><a href="{% url 'blog_sections' %}">{{ name_section }}</a></li>
+    </ul>
+{% endblock %}
 
 {% block blog_content %}
 		<div class="uk-child-width-1-2@m uk-padding uk-grid" uk-grid class="uk-flex-center">

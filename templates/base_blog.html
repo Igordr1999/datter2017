@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <nav class="uk-navbar-container" uk-navbar>
+    <div class="uk-navbar-left uk-navbar-center">
+
+        <ul class="uk-navbar-nav">
+            <li><a href="{% url 'blog'%}">Все статьи</a></li>
+            <li><a href="{% url 'blog_sections' %}">Темы</a></li>
+        </ul>
+
+    </div>
+</nav>
+    <div class="uk-section uk-section-default uk-padding-remove-vertical">
+            <div class="uk-container">
+                <div uk-grid="" class="uk-grid uk-flex-center">
+                    <div class="{% block blog_width %}uk-width-1-1{% endblock %} uk-first-column">
+                        <h1 class="uk-title uk-text-center uk-text-primary uk-padding-remove-vertical">
+                            {% block blog_name_page %}{% endblock %}
+                        </h1>
+                        {% block blog_nav %}
+                            <ul class="uk-breadcrumb uk-padding uk-padding-remove-vertical">
+                                <li><a href="{% url 'home' %}">Datter</a></li>
+                                <li><a href="{% url 'blog' %}">Блог</a></li>
+                            </ul>
+                        {% endblock %}
+
+                        {% block blog_content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}

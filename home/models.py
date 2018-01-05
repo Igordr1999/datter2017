@@ -11,8 +11,8 @@ class Section(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Раздел"
-        verbose_name_plural = "Разделы"
+        verbose_name = "Раздел блога"
+        verbose_name_plural = "Разделы блога"
         ordering = ["name"]
 
 
@@ -30,8 +30,8 @@ class BlogArticle(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = "Статья"
-        verbose_name_plural = "Статьи"
+        verbose_name = "Статья блога"
+        verbose_name_plural = "Статьи блога"
         ordering = ["time_publication"]
 
 

@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from home.models import BlogArticle, Page
+from django.shortcuts import render, get_list_or_404, get_object_or_404
+from home.models import BlogArticle, Page, Section
 
 
 def home(request):
@@ -27,3 +27,15 @@ def blog_article(request, num):
 def page(request):
     f = Page.objects.all()
     return render(request,'page.html', {'f':f})
+
+
+def blog_sections(request):
+    sections = Section.objects.all()
+    return render(request, 'blog/blog_sections.html', {'sections': sections})
+
+
+def blog_section(request, num):
+    articles = get_list_or_404(BlogArticle, section_id=num)
+    name_section = get_object_or_404(Section, id=num)
+    return render(request, 'blog/blog_section.html', {'all_articles': articles,
+                                                      'name_section': name_section})

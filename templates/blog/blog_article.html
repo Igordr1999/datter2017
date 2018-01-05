@@ -1,21 +1,22 @@
-{% extends 'base.html' %}
+{% extends 'base_blog.html' %}
 
-{% block content %}
-<div class="uk-section uk-section-default">
-            <div class="uk-container">
-            <ul class="uk-breadcrumb">
-                        <li><a href="{% url 'home' %}">Datter</a></li>
-                        <li><a href="{% url 'blog' %}">Блог</a></li>
-                        <li class="uk-disabled"><a href="#">{{ article.section }}</a></li>
-                        <li><span class="uk-disabled" href="#">{{ article.title }}</span></li>
-                    </ul>
-                <div uk-grid="" class="uk-grid">
-                    <div class="uk-width-1-1 uk-first-column">
+{% block blog_nav %}
+    <ul class="uk-breadcrumb">
+        <li><a href="{% url 'home' %}">Datter</a></li>
+        <li><a href="{% url 'blog' %}">Блог</a></li>
+        <li><a href="{% url 'blog_section' article.section.id %}">{{ article.section }}</a></li>
+        <li><span class="uk-disabled" href="#">{{ article.title }}</span></li>
+    </ul>
+{% endblock %}
+
+{% block blog_width %}uk-width-5-6{% endblock %}
+
+{% block blog_content %}
+    <div>
                         <article class="uk-article">
                             <h1 class="uk-article-title">{{ article.title }}</h1>
-                            <strong class="uk-article-meta">Автор -
-                                <a href="#">{{ article.author }}.</a>
-                                Время публикации: {{ article.time_publication }}
+                            <strong class="uk-article-meta">
+                                <a href="#">{{ article.author }}</a> | {{ article.time_publication }}
                             </strong>
                             <hr class="uk-divider-small">
                             <div class="fr-view">
@@ -23,10 +24,7 @@
                                     {{ article.content }}
                                 {% endautoescape %}
                             </div>
-                            <hr class="uk-divider-icon uk-margin-medium">
                         </article>
-                    </div>
-                </div>
-            </div>
-</div>
+
+    </div>
 {% endblock %}
