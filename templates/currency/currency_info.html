@@ -1,0 +1,10 @@
+{% extends 'base_currency.html' %}
+
+{% block currency_title %}<h1>Информация о валюте "{{ valuta.name_ru}}"</h1>{% endblock %}
+
+{% block currency_content %}
+    <h2>Название: {{ valuta.name_ru }}</h2>
+    <h2>Название (англ.): {{ valuta.name_en }}</h2>
+    <h4>Иконка: </h4>
+    <img src="{{ MEDIA_URL }}{{ valuta.icon }}" alt="Лого">
+{% endblock %}

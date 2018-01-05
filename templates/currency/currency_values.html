@@ -1,0 +1,9 @@
+{% extends 'base_currency.html' %}
+
+{% block currency_title %}<h1>Значение валюты "{{ valuta.name_ru}}" ({{ valuta.char_code }})</h1>{% endblock %}
+
+{% block currency_content %}
+    {% for v in values %}
+        <p>Дата: {{ v.date }} | Значение: {{ v.value }}</p>
+    {% endfor %}
+{% endblock %}
