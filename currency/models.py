@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 
 class Valuta(models.Model):
@@ -22,13 +23,38 @@ class Valuta(models.Model):
 class ValutaValue(models.Model):
     valuta = models.ForeignKey(Valuta, on_delete=models.CASCADE, verbose_name="Валюта")
     date = models.DateField(verbose_name="Дата")
-    value = models.FloatField(verbose_name="Значение", default=10.0000)
+    DIRECTION_CHOICE = (
+        ("T", 'Вверх'),
+        ("D", 'Вниз'),
+        ("N", 'Без изменений'),
+    )
+    direction_change = models.CharField(max_length=1, choices=DIRECTION_CHOICE, default="N",
+                                        verbose_name="Направление изменения курса")
+    percent_change = models.FloatField(verbose_name="Процентное изменение курса", default=0.00)
+    value = models.FloatField(verbose_name="Значение", default=60.1234)
 
+    def save(self, *args, **kwargs):
+        last_value = ValutaValue.objects.filter(valuta=self.valuta).first().value
+        change_value = self.value - last_value
+        self.percent_change = round(change_value/last_value*100, 2)
+        if change_value > 0:
+            self.direction_change = "T"
+        elif change_value < 0:
+            self.direction_change = "D"
+        else:
+            self.direction_change = "N"
+        super(ValutaValue, self).save(*args, **kwargs)
     # p = ValutaValue(valuta=Valuta.objects.first(), date=date(2016, 1, 2), value=55.6677)
     # p.save()
+
+    # from datetime import datetime
+    # epoch = datetime.utcfromtimestamp(0)
+    # q = (d - epoch).total_seconds() * 1000
+    # int(q)
+    # 1515715200000
 
     class Meta:
         verbose_name = "Котировка валюты"
         verbose_name_plural = "Котировки валют"
-        ordering = ["date"]
+        ordering = ["-date"]
         unique_together = ("valuta", "date")

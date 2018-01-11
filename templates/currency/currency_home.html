@@ -1,11 +1,10 @@
 {% extends 'base_currency.html' %}
 
-{% block currency_title %}<h1>Курсы валют</h1>{% endblock %}
+{% block currency_title %}Курсы валют{% endblock %}
 
-{% block currency_content %}
-    <ul>
+{% block currency_content %}<ul>
     {% for valuta in all_valuta %}
-        <li><a href="{% url 'currency_valuta_info' valuta.char_code %}">{{ valuta.name_ru }}</a></li>
+        <li><a href="{% url 'currency_values' valuta.char_code %}">{{ valuta.name_ru }}</a></li>
     {% endfor %}
     </ul>
 {% endblock %}

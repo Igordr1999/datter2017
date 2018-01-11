@@ -128,3 +128,15 @@ body {
 .login_link{
     margin: 0;
 }
+
+.symbol_change_down{
+    color: #ff0000;
+}
+
+.symbol_change_top{
+    color: #00EE76;
+}
+
+.currency_table tr td{
+    padding: 12px;
+}

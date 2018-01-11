@@ -9,10 +9,14 @@ def currency_home(request):
 
 
 def currency_values(request, code):
-    values = get_list_or_404(ValutaValue, valuta=Valuta.objects.get(char_code=code))
     valuta = get_object_or_404(Valuta, char_code=code)
+    values = get_list_or_404(ValutaValue, valuta=Valuta.objects.get(char_code=code))
+
+    values = values[::-1]  # по возрастанию дат. Требование поставщика графика
+    last_values = values[::-1][:10]  # для оптимизации запросов снова переворачиваем и выделяем 10 крайних
     return render(request, 'currency/currency_values.html', {'values': values,
-                                                             'valuta': valuta})
+                                                             'valuta': valuta,
+                                                             'last_values': last_values})
 
 
 def currency_valuta_info(request, code):

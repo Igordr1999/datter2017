@@ -1,9 +1,129 @@
 {% extends 'base_currency.html' %}
+{% load l10n %}
 
-{% block currency_title %}<h1>Значение валюты "{{ valuta.name_ru}}" ({{ valuta.char_code }})</h1>{% endblock %}
+{% block currency_title %}Значение валюты "{{ valuta.name_ru}}" ({{ valuta.char_code }}){% endblock %}
 
 {% block currency_content %}
-    {% for v in values %}
-        <p>Дата: {{ v.date }} | Значение: {{ v.value }}</p>
+
+    <div id="currency_chart" style="height: 490px; min-width: 310px;"></div>
+
+    <script>
+    Highcharts.setOptions({
+        global: {
+        timezoneOffset: -3 * 60
+    },
+    lang: {
+        invalidDate: "Неправильные даты",
+        loading: "Идет загрузка...",
+        noData: "Нет данных",
+        downloadCSV: "Скачать в CSV",
+        downloadJPEG: "Скачать в JPEG",
+        downloadPDF: "Скачать в PDF",
+        downloadPNG: "Скачать в PNG",
+        downloadSVG: "Скачать в SVG",
+        downloadXLS: "Скачать в XLS",
+        printChart: "Напечатать график",
+        rangeSelectorFrom: "В диапозоне с",
+        rangeSelectorTo: "до",
+        rangeSelectorZoom: "Маштаб",
+        months: [
+            'Январь', 'Февраль', 'Март', 'Апрель',
+            'Май', 'Июнь', 'Июль', 'Август',
+            'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        ],
+        weekdays: [
+            'Воскресенье', 'Понедельник', 'Вторник', 'Среда',
+            'Четверг', 'Пятница', 'Суббота'
+        ],
+        shortMonths: [
+            'Янв', 'Фев', 'Март', 'Апр',
+            'Май', 'Июнь', 'Июль', 'Авг',
+            'Сен', 'Окт', 'Нояб', 'Дек'
+        ],
+    }
+});
+
+    // Create the chart
+    Highcharts.stockChart('currency_chart', {
+
+        credits:{
+            href: "https://datter.ru/",
+            text: "Datter.ru",
+        },
+
+        title: {
+            text: 'Курс валюты'
+        },
+
+        rangeSelector: {
+            buttons: [{
+                type: 'week',
+                count: 1,
+                text: 'за неделю'
+            }, {
+                type: 'month',
+                count: 1,
+                text: 'за месяц'
+            }, {
+                type: 'month',
+                count: 3,
+                text: 'за квартал'
+            },{
+                type: 'ytd',
+                count: 1,
+                text: 'за полгода'
+            }, {
+                type: 'all',
+                count: 1,
+                text: 'за всё время'
+            }],
+            buttonTheme: {
+                width: 100
+            },
+            selected: 1,
+            inputEnabled: true
+        },
+
+        series: [{
+            name: 'Значение',
+            data:
+[
+        {% for v in values %}
+            [{{ v.date|date:"U" }}000,{{v.value|unlocalize}}],
+        {% endfor %}
+],
+
+            tooltip: {
+                valueDecimals: 2
+            }
+        }]
+    });
+    </script>
+{% endblock %}
+
+{% block extra_block %}
+<table class="uk-table uk-table-striped">
+    <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Курс</th>
+            <th>Изменение</th>
+        </tr>
+    </thead>
+    <tbody class="currency_table">
+    {% for l in last_values %}
+        <tr>
+            <td>{{ l.date|date:"SHORT_DATE_FORMAT"}}</td>
+            <td>{{l.value|floatformat:4}}</td>
+            {% if l.direction_change == "T" %}
+                <td class="symbol_change_top">🡹 ({{ l.percent_change|floatformat:2 }}%)</td>
+                {% elif l.direction_change == "D" %}
+                <td class="symbol_change_down">🡻 ({{ l.percent_change }}%)</td>
+                {% else %}
+                <td>⚫ ({{ l.percent_change }}%)</td>
+            {% endif %}
+        </tr>
     {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
