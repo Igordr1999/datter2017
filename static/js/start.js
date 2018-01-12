@@ -1,4 +1,9 @@
+
+
 $(document).ready(function() {
+    //$('.currency_table').on('click', '.rowlink td #copy', function(){
+    //    var $value = $(this).parent().parent().find('.currency_value').html();
+    //});
     $('.down').click(function () {
         var $input = $(this).parent().find('input');
         var count = parseInt($input.val()) - 1;

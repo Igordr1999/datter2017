@@ -1,6 +1,12 @@
 from django.db import models
 from datetime import datetime
 
+DIRECTION_CHOICE = (
+        ("T", 'Вверх'),
+        ("D", 'Вниз'),
+        ("N", 'Без изменений'),
+    )
+
 
 class Valuta(models.Model):
     name_ru = models.CharField(verbose_name="Название (RU)", max_length=100, unique=True)
@@ -10,6 +16,7 @@ class Valuta(models.Model):
     nominal = models.IntegerField(verbose_name="Номинал", default=1)
     description = models.TextField(verbose_name="Описание", max_length=300)
     icon = models.ImageField(verbose_name="Иконка", upload_to='currency/icon/')
+    popular = models.BooleanField(verbose_name="Популярная валюта", default=False)
 
     def __str__(self):
         return self.name_ru
@@ -23,11 +30,6 @@ class Valuta(models.Model):
 class ValutaValue(models.Model):
     valuta = models.ForeignKey(Valuta, on_delete=models.CASCADE, verbose_name="Валюта")
     date = models.DateField(verbose_name="Дата")
-    DIRECTION_CHOICE = (
-        ("T", 'Вверх'),
-        ("D", 'Вниз'),
-        ("N", 'Без изменений'),
-    )
     direction_change = models.CharField(max_length=1, choices=DIRECTION_CHOICE, default="N",
                                         verbose_name="Направление изменения курса")
     percent_change = models.FloatField(verbose_name="Процентное изменение курса", default=0.00)

@@ -38,6 +38,7 @@ urlpatterns = [
 
     # Приложение currency
     path('currency/', currency_views.currency_home, name="currency"),
+    path('currency/converter/', currency_views.currency_converter, name="currency_converter"),
     path('currency/<code>/', currency_views.currency_values, name="currency_values"),
     path('currency/<code>/info/', currency_views.currency_valuta_info, name="currency_valuta_info"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

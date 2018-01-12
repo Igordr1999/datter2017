@@ -1,0 +1,43 @@
+{% extends 'base_currency.html' %}
+{% block currency_content %}
+
+<form class="uk-form-horizontal uk-margin-large" action="{% url 'currency_converter' %}" method="post">
+    {% csrf_token %}
+    <legend class="uk-legend">Конвертер валют</legend>
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-select">Из валюты</label>
+        <div class="uk-form-controls">
+            {{ form.valuta_from }}
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Начальное значение</label>
+        <div class="uk-form-controls">
+            {{ form.value_from }}
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-select">В валюту</label>
+        <div class="uk-form-controls">
+            {{ form.valuta_to}}
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <label class="uk-form-label" for="form-horizontal-text">Конечное значение</label>
+        <div class="uk-form-controls">
+            <input class="uk-input" id="form-horizontal-text" type="text" value="{% if answer %}{{ answer }}{% else %}
+            Это поле считается автоматически
+            {% endif %}" readonly>
+        </div>
+    </div>
+
+    <button class="uk-button uk-button-primary uk-width-1-1">Посчитать</button>
+
+</form>
+
+{% endblock %}
+</body>
+</html>

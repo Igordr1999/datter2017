@@ -127,3 +127,18 @@
     </tbody>
 </table>
 {% endblock %}
+
+{% block currency_menu %}
+                        <div class="uk-inline">
+                            <button class="uk-button uk-button-default" type="button">Меню раздела валюты</button>
+                            <div uk-dropdown="pos: bottom-justify">
+                                <ul class="uk-nav uk-dropdown-nav">
+                                    <li class="uk-nav-header">Популярные валюты</li>
+                                    <li><a href="{% url "currency_values" 'USD' %}">Доллар</a></li>
+                                    <li><a href="{% url "currency_values" 'EUR' %}">Евро</a></li>
+                                    <li class="uk-nav-divider"></li>
+                                    <li><a href="{% url "currency" %}">К общему списку</a></li>
+                                </ul>
+                            </div>
+                        </div>
+{% endblock %}

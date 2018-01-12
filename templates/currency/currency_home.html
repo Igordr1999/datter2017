@@ -2,9 +2,43 @@
 
 {% block currency_title %}Курсы валют{% endblock %}
 
-{% block currency_content %}<ul>
-    {% for valuta in all_valuta %}
-        <li><a href="{% url 'currency_values' valuta.char_code %}">{{ valuta.name_ru }}</a></li>
-    {% endfor %}
-    </ul>
+{% block currency_menu %}{% endblock %}
+
+{% block currency_content %}
+    <h3 class="uk-margin-top">Все известные валюты</h3>
+    <table class="uk-table uk-table-hover uk-table-middle uk-table-divider uk-table-striped">
+        <thead>
+            <tr>
+                <th class="uk-table-shrink">Иконка</th>
+                <th>Код</th>
+                <th>Номинал</th>
+                <th>Валюта</th>
+                <th>Курс</th>
+                <th>Изменение</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for valuta, last_values in context.pairs%}
+            <tr>
+                <td><img class="uk-preserve-width uk-border-circle" src="{{ MEDIA_URL }}{{ valuta.icon }}" width="40" alt=""></td>
+                <td><a href="{% url 'currency_values' valuta.char_code %}"> {{ valuta.char_code }}</a></td>
+                <td>{{ valuta.nominal }}</td>
+                <td>{{ valuta.name_ru }}</td>
+                <td>{{ last_values.value }}</td>
+                {% if last_values.direction_change == "T" %}
+                <td class="symbol_change_top">🡹 ({{ last_values.percent_change|floatformat:2 }}%)</td>
+                {% elif last_values.direction_change == "D" %}
+                <td class="symbol_change_down">🡻 ({{ last_values.percent_change }}%)</td>
+                {% else %}
+                <td>⚫ ({{ last_values.percent_change }}%)</td>
+            {% endif %}
+                <td>
+                    <a href="{% url 'currency_values' valuta.char_code %}" uk-icon="icon: thumbnails; ratio: 1.5" title="Динамический график и сводная информация"></a>
+                    <a href="{% url 'currency_valuta_info' valuta.char_code %}" uk-icon="icon: info; ratio: 1.5" title="Информация о валюте"></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
