@@ -24,7 +24,6 @@ from django.conf.urls import include
 urlpatterns = [
     # Системные
     path('froala_editor/', include('froala_editor.urls')),
-    path('page/', home_views.page, name="page"),
     path('admin/', admin.site.urls),
 
     # Приложение home

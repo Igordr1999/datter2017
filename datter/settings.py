@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'froala_editor',
     'home.apps.HomeConfig',
     'currency.apps.CurrencyConfig',
+    'data.apps.DataConfig',
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

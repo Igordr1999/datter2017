@@ -33,7 +33,3 @@ class BlogArticle(models.Model):
         verbose_name = "Статья блога"
         verbose_name_plural = "Статьи блога"
         ordering = ["time_publication"]
-
-
-class Page(models.Model):
-    content = FroalaField()
