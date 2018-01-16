@@ -46,14 +46,14 @@ class ValutaValue(models.Model):
         else:
             self.direction_change = "N"
         super(ValutaValue, self).save(*args, **kwargs)
-    # p = ValutaValue(valuta=Valuta.objects.first(), date=date(2016, 1, 2), value=55.6677)
-    # p.save()
 
-    # from datetime import datetime
-    # epoch = datetime.utcfromtimestamp(0)
-    # q = (d - epoch).total_seconds() * 1000
-    # int(q)
-    # 1515715200000
+    @staticmethod
+    def add_value(valuta, day, month, year, value):
+        my_date = datetime(day=day, month=month, year=year)
+        my_valuta = Valuta.objects.get(char_code=valuta)
+        ValutaValue.objects.create(valuta=my_valuta, date=my_date, value=value)
+
+        # ValutaValue.add_value("USD", 2, 2, 2018, 65.2234)
 
     class Meta:
         verbose_name = "Котировка валюты"
