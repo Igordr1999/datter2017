@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3qar-3#j_k@q6#qfgh7d6(ipk_bg0@i%yf8@lb$m6-9efvo5vf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'froala_editor',
+    'storages',
     'home.apps.HomeConfig',
     'currency.apps.CurrencyConfig',
     'data.apps.DataConfig',
@@ -132,3 +133,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_S3_HOST = 'hb.bizmrg.com'
+AWS_ACCESS_KEY_ID = 'y1HWpfoxT6EthLDG2FA5Q'
+AWS_SECRET_ACCESS_KEY = '2Dj3xaY1QoEDAi7qr7iKBAuxAKQupzG7duXSoaj9y3QW'
+AWS_STORAGE_BUCKET_NAME = 'datter_main'
