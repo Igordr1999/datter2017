@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from home import views as home_views
 from currency import views as currency_views
+from data import views as data_views
 from django.conf.urls import include
 
 urlpatterns = [
@@ -40,4 +41,8 @@ urlpatterns = [
     path('currency/converter/', currency_views.currency_converter, name="currency_converter"),
     path('currency/<code>/', currency_views.currency_values, name="currency_values"),
     path('currency/<code>/info/', currency_views.currency_valuta_info, name="currency_valuta_info"),
+
+    # Приложение data. Раздел - data
+    path('time/', data_views.time_home, name="time_home"),
+    path('time/<name>', data_views.time_city, name="time_city"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

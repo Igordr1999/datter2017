@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h1>Время</h1>
+    <ul>
+        <li>Город:{{ info.name_ru }}</li>
+        <li>Часовая зона:{{ info.time_zone.timeZoneId}}</li>
+        <li>Имя зоны: {{ info.time_zone.timeZoneName }}</li>
+        <li>{% if info.time_zone.is_primary %}Ключевая зона</li>{% endif %}
+        <li>Зимой (основной): {{ info.time_zone.utcRawOffset }}</li>
+        <li>Летом: {{ info.time_zone.utcDstOffset }}</li>
+        <li>{% if info.time_zone.is_difference_dst %}Есть переход на летнее время{% else %}
+        Нету перехода на летнее время</li>{% endif %}
+    </ul>
+{% endblock %}
