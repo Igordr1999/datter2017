@@ -47,14 +47,6 @@ class ValutaValue(models.Model):
             self.direction_change = "N"
         super(ValutaValue, self).save(*args, **kwargs)
 
-    @staticmethod
-    def add_value(valuta, day, month, year, value):
-        my_date = datetime(day=day, month=month, year=year)
-        my_valuta = Valuta.objects.get(char_code=valuta)
-        ValutaValue.objects.create(valuta=my_valuta, date=my_date, value=value)
-
-        # ValutaValue.add_value("USD", 2, 2, 2018, 65.2234)
-
     class Meta:
         verbose_name = "Котировка валюты"
         verbose_name_plural = "Котировки валют"

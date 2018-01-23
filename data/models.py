@@ -9,12 +9,6 @@ class Language(models.Model):
     alpha3 = models.CharField(verbose_name="3-символьный код", max_length=3, unique=True)
     numeric = models.IntegerField(verbose_name="Числовой код", unique=True)
 
-    @staticmethod
-    def add_language(name_ru, name_en, alpha2, alpha3, numeric):
-        Language.objects.create(name_ru=name_ru, name_en=name_en,
-                                alpha2=alpha2, alpha3=alpha3, numeric=numeric)
-        # Language.add_language("Китайский", "China", "CH", "CHI", 187)
-
     def __str__(self):
         return self.name_ru
 
@@ -60,13 +54,6 @@ class TimeZone(models.Model):
 
         super(TimeZone, self).save(*args, **kwargs)
 
-    @staticmethod
-    def add_time_zone(zone_id, zone_name, raw_offset, dst_offset, is_pr):
-        TimeZone.objects.create(timeZoneId=zone_id, timeZoneName=zone_name, rawOffset=raw_offset, dstOffset=dst_offset,
-                                is_primary=is_pr)
-
-        # TimeZone.add_time_zone("Europe/Moscow", "Moss", 10800, 0, True)
-
     def __str__(self):
         return self.timeZoneName
 
@@ -81,12 +68,6 @@ class Region(models.Model):
     name_en = models.CharField(verbose_name="Международное название", max_length=50, unique=True)
     alpha2 = models.CharField(verbose_name="2-символьный код", max_length=2, unique=True)
     numeric = models.IntegerField(verbose_name="Числовой код", unique=True)
-
-    @staticmethod
-    def add_region(name_ru, name_en, alpha2, numeric):
-        Region.objects.create(name_ru=name_ru, name_en=name_en, alpha2=alpha2, numeric=numeric)
-
-        # Region.add_region("Африка", "Africa", "AF", 77)
 
     def __str__(self):
         return self.name_ru
@@ -103,13 +84,6 @@ class SubRegion(models.Model):
     name_en = models.CharField(verbose_name="Международное название", max_length=50, unique=True)
     alpha2 = models.CharField(verbose_name="2-символьный код", max_length=2, unique=True)
     numeric = models.IntegerField(verbose_name="Числовой код", unique=True)
-
-    @staticmethod
-    def add_sub_region(region_code, name_ru, name_en, alpha2, numeric):
-        my_region = Region.objects.get(alpha2=region_code)
-        SubRegion.objects.create(region=my_region, name_ru=name_ru, name_en=name_en, alpha2=alpha2, numeric=numeric)
-
-    # SubRegion.add_sub_region("AF", "Центральная Африка", "Central Africa", "CA", 88)
 
     def __str__(self):
         return self.name_ru
@@ -138,20 +112,6 @@ class Country(models.Model):
     currency = models.ForeignKey(Valuta, on_delete=models.CASCADE, verbose_name="Основная валюта")
     language = models.ForeignKey(Language, on_delete=models.CASCADE, verbose_name="Основной язык")
 
-    @staticmethod
-    def add_country(name_ru, name_en, full_name_ru, full_name_en, alpha2, alpha3, numeric, area, population,
-                    sub_region, currency, language):
-        my_sub_region = SubRegion.objects.get(alpha2=sub_region)
-        my_currency = Valuta.objects.get(char_code=currency)
-        my_language = Language.objects.get(alpha2=language)
-        Country.objects.create(name_ru=name_ru, name_en=name_en, full_name_ru=full_name_ru,
-                               full_name_en=full_name_en, alpha2=alpha2, alpha3=alpha3, numeric=numeric,
-                               area=area, population=population, sub_region=my_sub_region, currency=my_currency,
-                               language=my_language)
-
-        # Country.add_country("Белоруссия", "Belorus", "Белоруссия", "Belorus", "BE", "BEL", 999, 555, 444, "VV",
-        # "USD", "RU")
-
     def __str__(self):
         return self.name_ru
 
@@ -175,18 +135,6 @@ class City(models.Model):
     coat_of_arms = models.ImageField(verbose_name="Герб", upload_to='data/city/coat_of_arms/',
                                      default='data/city/coat_of_arms/no_flag.jpg')
     time_zone = models.ForeignKey(TimeZone, on_delete=models.CASCADE, verbose_name="Часовой пояс")
-
-    @staticmethod
-    def add_city(country, name_ru, name_en, alpha3, latitude, longitude, is_cap,
-                 area, population, time_zone):
-        my_country = Country.objects.get(alpha2=country)
-        my_time_zone = TimeZone.objects.get(timeZoneId=time_zone)
-        City.objects.create(country=my_country, name_ru=name_ru, name_en=name_en, alpha3=alpha3,
-                            latitude=latitude, longitude=longitude, is_capital=is_cap,
-                            area=area, population=population, time_zone=my_time_zone)
-
-        # City.add_city("RU", "Санкт-Петербург", "Saint-Peterburg", "SPB", 58.44, 30.55, False, 5155, 6166,
-        # "Europe/Moscow")
 
     def __str__(self):
         return self.name_ru
