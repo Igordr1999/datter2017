@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h1>Время</h1>
+    <ul>
+        <li>Название {{ info.timeZoneName }}</li>
+        <li>ID {{ info.timeZoneId }}</li>
+        <li>Зимний часовой пояс {{ info.utcRawOffset }}</li>
+        <li>Летний часовой пояс {{ info.utcDstOffset }}</li>
+    </ul>
+{% endblock %}

@@ -6,7 +6,9 @@
     {% for i in top6 %}
         <li>
         <div class="uk-card uk-card-default uk-card-body">
-            <p id="{{ i.alpha3 }}_name" class="uk-text-uppercase uk-text-large">{{ i.name_ru }}, {{ i.country }}</p>
+            <p id="{{ i.alpha3 }}_name" class="uk-text-uppercase uk-text-large">
+                <a href="{% url 'time_city' i.name_en %}">{{ i.name_ru }}, {{ i.country }}</a>
+            </p>
             <p class="uk-display-inline uk-countdown-number" id="{{ i.alpha3 }}_hour">00</p>
             <div class="uk-display-inline uk-countdown-separator">:</div>
             <div class="uk-display-inline uk-countdown-number" id="{{ i.alpha3 }}_minute">00</div>

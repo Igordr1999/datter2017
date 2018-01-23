@@ -4,7 +4,9 @@
 <h1>Время</h1>
     <ul>
         <li>Город:{{ info.name_ru }}</li>
-        <li>Часовая зона:{{ info.time_zone.timeZoneId}}</li>
+        <li>Часовая зона:
+            <a href="{% url 'time_timezone' info.time_zone.timeZoneId %}">{{ info.time_zone.timeZoneId}}</a>
+        </li>
         <li>Имя зоны: {{ info.time_zone.timeZoneName }}</li>
         <li>{% if info.time_zone.is_primary %}Ключевая зона</li>{% endif %}
         <li>Зимой (основной): {{ info.time_zone.utcRawOffset }}</li>

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<h1>Время</h1>
+    <ul>
+    {% for i in info %}
+        <li>
+            <a href="{% url 'time_timezone' i.timeZoneId %}">{{ i.timeZoneId }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

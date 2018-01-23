@@ -44,5 +44,8 @@ urlpatterns = [
 
     # Приложение data. Раздел - data
     path('time/', data_views.time_home, name="time_home"),
-    path('time/<name>', data_views.time_city, name="time_city"),
+    path('time/cities/', data_views.time_cities, name="time_cities"),
+    path('time/timezones/', data_views.time_timezones, name="time_timezones"),
+    path('time/<name>/', data_views.time_city, name="time_city"),
+    path('time/zone/<path:name>/', data_views.time_timezone, name="time_timezone"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
