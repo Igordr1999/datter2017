@@ -1,7 +1,11 @@
 from data.models import Country, City, Region, SubRegion, Valuta, Language, TimeZone
 from currency.models import Valuta, ValutaValue
+from weather.models import HourlyWeather
 
 from datetime import datetime
+from django.utils import timezone
+import pytz
+from darksky import forecast
 
 
 class Update(object):
@@ -54,3 +58,64 @@ class Update(object):
         my_date = datetime(day=day, month=month, year=year)
         my_valuta = Valuta.objects.get(char_code=valuta)
         ValutaValue.objects.create(valuta=my_valuta, date=my_date, value=value)
+
+
+class ForecastApiRequest(object):
+    WEATHER_API_KEY = "98e750a215fca2aa271b64eb3fde5c7c"
+    WEATHER_LANG = "ru"
+    WEATHER_UNITS = "si"
+    city_alpha3 = ""
+
+    def __init__(self, city_alpha3):
+        self.city_alpha3 = city_alpha3
+
+    def get_hourly_weather(self):
+        city = City.objects.get(alpha3=self.city_alpha3)
+        lat = city.latitude
+        lon = city.longitude
+        weather = forecast(key=self.WEATHER_API_KEY, latitude=lat, longitude=lon, lang=self.WEATHER_LANG,
+                           units=self.WEATHER_UNITS)
+        weather.refresh(extend='hourly')  # Получаем 24*7 строк, а не 24*3 по дефолту
+
+        for i in weather.hourly:
+            my_date = timezone.datetime.utcfromtimestamp(i.time).astimezone(timezone.utc)
+            # Присваиваем дефолтные параметры необязательным атрибутам (precipType и visibility)
+            if hasattr(i, 'precipType'):
+                my_precip_type = i.precipType
+            else:
+                my_precip_type = "NO DATA"
+
+            if hasattr(i, 'visibility'):
+                my_visibility = i.visibility
+            else:
+                my_visibility = 30  # если visibility > 10 милей, то назначаем видимость > 30 км
+
+            # добавляем объект в БД
+            HourlyWeather.objects.create(
+                response_text=weather.hourly._data,
+
+                city=city,
+                date=my_date,
+                summary=i.summary,
+                icon_name=i.icon,
+
+                precipIntensity=i.precipIntensity,
+                precipProbability=i.precipProbability,
+                precipType=my_precip_type,
+
+                temperature=i.temperature,
+                apparentTemperature=i.apparentTemperature,
+
+                dewPoint=i.dewPoint,
+                humidity=i.humidity,
+                pressure=i.pressure,
+
+                windSpeed=i.windSpeed,
+                windGust=i.windGust,
+                windBearing=i.windBearing,
+
+                cloudCover=i.cloudCover,
+                uvIndex=i.uvIndex,
+                visibility=my_visibility,
+                ozone=i.ozone,
+            )
