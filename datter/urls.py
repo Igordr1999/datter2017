@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from home import views as home_views
 from currency import views as currency_views
 from data import views as data_views
+from weather import views as weather_views
 from django.conf.urls import include
 
 urlpatterns = [
@@ -48,4 +49,6 @@ urlpatterns = [
     path('time/timezones/', data_views.time_timezones, name="time_timezones"),
     path('time/<name>/', data_views.time_city, name="time_city"),
     path('time/zone/<path:name>/', data_views.time_timezone, name="time_timezone"),
+
+    path('weather/<name>/', weather_views.forecast_7days, name="forecast_7days"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

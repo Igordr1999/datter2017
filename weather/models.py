@@ -86,7 +86,7 @@ class HourlyWeather(models.Model):
     ozone = models.FloatField(verbose_name="Озон")
 
     def __str__(self):
-        return self.city
+        return str(self.city)
 
     class Meta:
         verbose_name = "Погода за час"

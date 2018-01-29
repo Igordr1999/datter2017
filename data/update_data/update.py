@@ -65,6 +65,8 @@ class ForecastApiRequest(object):
     WEATHER_LANG = "ru"
     WEATHER_UNITS = "si"
     city_alpha3 = ""
+    my_precip_type = "NO DATA"
+    my_visibility = 30
 
     def __init__(self, city_alpha3):
         self.city_alpha3 = city_alpha3
@@ -75,47 +77,49 @@ class ForecastApiRequest(object):
         lon = city.longitude
         weather = forecast(key=self.WEATHER_API_KEY, latitude=lat, longitude=lon, lang=self.WEATHER_LANG,
                            units=self.WEATHER_UNITS)
-        weather.refresh(extend='hourly')  # Получаем 24*7 строк, а не 24*3 по дефолту
+        weather.refresh(units='si', extend='hourly')  # Получаем 24*7 строк, а не 24*3 по дефолту
+        self.save_hourly_weather(weather=weather, city=city)
 
+    def give_default_value(self, key):
+        if hasattr(key, 'precipType'):
+            self.my_precip_type = key.precipType
+
+        if hasattr(key, 'visibility'):
+            self.my_visibility = key.visibility
+
+    def save_hourly_weather(self, weather, city):
         for i in weather.hourly:
             my_date = timezone.datetime.utcfromtimestamp(i.time).astimezone(timezone.utc)
-            # Присваиваем дефолтные параметры необязательным атрибутам (precipType и visibility)
-            if hasattr(i, 'precipType'):
-                my_precip_type = i.precipType
-            else:
-                my_precip_type = "NO DATA"
+            # Присваиваем дефолтные значения необязательным атрибутам (precipType и visibility)
+            self.give_default_value(i)
 
-            if hasattr(i, 'visibility'):
-                my_visibility = i.visibility
-            else:
-                my_visibility = 30  # если visibility > 10 милей, то назначаем видимость > 30 км
+            # добавляем или обновляем объект в БД
+            new_data = {'response_text': weather.hourly._data,
+                        'summary': i.summary,
+                        'icon_name': i.icon,
 
-            # добавляем объект в БД
-            HourlyWeather.objects.create(
-                response_text=weather.hourly._data,
+                        'precipIntensity': i.precipIntensity,
+                        'precipProbability': i.precipProbability,
+                        'precipType': self.my_precip_type,
 
+                        'temperature': i.temperature,
+                        'apparentTemperature': i.apparentTemperature,
+
+                        'dewPoint': i.dewPoint,
+                        'humidity': i.humidity,
+                        'pressure': i.pressure,
+
+                        'windSpeed': i.windSpeed,
+                        'windGust': i.windGust,
+                        'windBearing': i.windBearing,
+
+                        'cloudCover': i.cloudCover,
+                        'uvIndex': i.uvIndex,
+                        'visibility': self.my_visibility,
+                        'ozone': i.ozone,
+                        }
+            HourlyWeather.objects.update_or_create(
                 city=city,
                 date=my_date,
-                summary=i.summary,
-                icon_name=i.icon,
-
-                precipIntensity=i.precipIntensity,
-                precipProbability=i.precipProbability,
-                precipType=my_precip_type,
-
-                temperature=i.temperature,
-                apparentTemperature=i.apparentTemperature,
-
-                dewPoint=i.dewPoint,
-                humidity=i.humidity,
-                pressure=i.pressure,
-
-                windSpeed=i.windSpeed,
-                windGust=i.windGust,
-                windBearing=i.windBearing,
-
-                cloudCover=i.cloudCover,
-                uvIndex=i.uvIndex,
-                visibility=my_visibility,
-                ozone=i.ozone,
+                defaults=new_data,
             )
