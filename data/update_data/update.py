@@ -140,6 +140,9 @@ class ForecastApiRequest(object):
             my_sunrise_time = timezone.datetime.utcfromtimestamp(i.sunriseTime).replace(tzinfo=timezone.utc)
             my_sunset_time = timezone.datetime.utcfromtimestamp(i.sunsetTime).replace(tzinfo=timezone.utc)
 
+            # Получаем ссылки на периоды этого дня (часы: 0-3-6-9-12-15-18-21)
+            my_list = self.research_daily_forecast()
+
             # Присваиваем дефолтные значения необязательным атрибутам (precipType и visibility)
             self.give_default_value_daily(i)
 
@@ -172,6 +175,15 @@ class ForecastApiRequest(object):
                         'cloudCover': i.cloudCover,
                         'uvIndex': i.uvIndex,
                         'ozone': i.ozone,
+
+                        'situation_0': my_list[0],
+                        'situation_3': my_list[1],
+                        'situation_6': my_list[2],
+                        'situation_9': my_list[3],
+                        'situation_12': my_list[4],
+                        'situation_15': my_list[5],
+                        'situation_18': my_list[6],
+                        'situation_21': my_list[7],
                         }
             DailyForecastWeather.objects.update_or_create(
                 city=city,
@@ -208,3 +220,4 @@ class ForecastApiRequest(object):
         info_15 = hourly_forecast.get(datetime_utc=time_15)
         info_18 = hourly_forecast.get(datetime_utc=time_18)
         info_21 = hourly_forecast.get(datetime_utc=time_21)
+        return info_0, info_3, info_6, info_9, info_12, info_15, info_18, info_21
