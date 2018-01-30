@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import HourlyWeather
+from .models import HourlyForecastWeather
 
 
-@admin.register(HourlyWeather)
+@admin.register(HourlyForecastWeather)
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ['city', 'date', 'icon_name', 'temperature']
+    list_display = ['city', 'datetime_utc', 'icon_name', 'temperature', 'summary']

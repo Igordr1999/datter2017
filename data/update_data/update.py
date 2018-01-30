@@ -1,11 +1,11 @@
 from data.models import Country, City, Region, SubRegion, Valuta, Language, TimeZone
 from currency.models import Valuta, ValutaValue
-from weather.models import HourlyWeather
+from weather.models import HourlyForecastWeather
 
-from datetime import datetime
-from django.utils import timezone
+from datetime import datetime, timedelta, date, timezone
 import pytz
 from darksky import forecast
+from django.db.models import Avg, Max, Min
 
 
 class Update(object):
@@ -65,20 +65,21 @@ class ForecastApiRequest(object):
     WEATHER_LANG = "ru"
     WEATHER_UNITS = "si"
     city_alpha3 = ""
+    city = ""
     my_precip_type = "NO DATA"
     my_visibility = 30
 
     def __init__(self, city_alpha3):
         self.city_alpha3 = city_alpha3
+        self.city = City.objects.get(alpha3=self.city_alpha3)
 
     def get_hourly_weather(self):
-        city = City.objects.get(alpha3=self.city_alpha3)
-        lat = city.latitude
-        lon = city.longitude
+        lat = self.city.latitude
+        lon = self.city.longitude
         weather = forecast(key=self.WEATHER_API_KEY, latitude=lat, longitude=lon, lang=self.WEATHER_LANG,
                            units=self.WEATHER_UNITS)
-        weather.refresh(units='si', extend='hourly')  # Получаем 24*7 строк, а не 24*3 по дефолту
-        self.save_hourly_weather(weather=weather, city=city)
+        weather.refresh(units='si', extend='hourly', lang='ru')  # Получаем 24*7 строк, а не 24*3 по дефолту
+        self.save_hourly_weather(weather=weather, city=self.city)
 
     def give_default_value(self, key):
         if hasattr(key, 'precipType'):
@@ -89,12 +90,15 @@ class ForecastApiRequest(object):
 
     def save_hourly_weather(self, weather, city):
         for i in weather.hourly:
-            my_date = timezone.datetime.utcfromtimestamp(i.time).astimezone(timezone.utc)
+            my_date = timezone.datetime.utcfromtimestamp(i.time)
+            my_datetime_utc = my_date.replace(tzinfo=timezone.utc)
+            # my_datetime_local = my_datetime_utc.astimezone(tz=pytz.timezone(weather.timezone))
+            # print(i.time,my_date, my_datetime_utc, my_datetime_local, weather.timezone)
             # Присваиваем дефолтные значения необязательным атрибутам (precipType и visibility)
             self.give_default_value(i)
 
             # добавляем или обновляем объект в БД
-            new_data = {'response_text': weather.hourly._data,
+            new_data = {'raw_response': weather.hourly._data,
                         'summary': i.summary,
                         'icon_name': i.icon,
 
@@ -118,8 +122,38 @@ class ForecastApiRequest(object):
                         'visibility': self.my_visibility,
                         'ozone': i.ozone,
                         }
-            HourlyWeather.objects.update_or_create(
+            HourlyForecastWeather.objects.update_or_create(
                 city=city,
-                date=my_date,
+                datetime_utc=my_datetime_utc,
                 defaults=new_data,
             )
+
+    def research_daily_forecast(self):
+        hourly_forecast = HourlyForecastWeather.objects.filter(city=self.city)
+        timezone_id = self.city.time_zone.timeZoneName
+        timezone_offset = self.city.time_zone.rawOffset
+
+        today_date = date.today()
+        today = datetime(day=today_date.day,
+                         month=today_date.month,
+                         year=today_date.year,
+                         tzinfo=timezone.utc)
+        date_offset = timedelta(seconds=timezone_offset)
+        # time_xx - время для запроса к БД, XX - часы по UTC
+        time_0 = today.replace(hour=0) - date_offset
+        time_3 = today.replace(hour=3) - date_offset
+        time_6 = today.replace(hour=6) - date_offset
+        time_9 = today.replace(hour=9) - date_offset
+        time_12 = today.replace(hour=12) - date_offset
+        time_15 = today.replace(hour=15) - date_offset
+        time_18 = today.replace(hour=18) - date_offset
+        time_21 = today.replace(hour=21) - date_offset
+
+        info_0 = hourly_forecast.filter(datetime_utc=time_0)
+        info_3 = hourly_forecast.filter(datetime_utc=time_3)
+        info_6 = hourly_forecast.filter(datetime_utc=time_6)
+        info_9 = hourly_forecast.filter(datetime_utc=time_9)
+        info_12 = hourly_forecast.filter(datetime_utc=time_12)
+        info_15 = hourly_forecast.filter(datetime_utc=time_15)
+        info_18 = hourly_forecast.filter(datetime_utc=time_18)
+        info_21 = hourly_forecast.filter(datetime_utc=time_21)

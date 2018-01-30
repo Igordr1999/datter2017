@@ -1,8 +1,8 @@
 from django.db import models
 from data.models import City
 
-'''
-class Daily(models.Model):
+
+class DailyForecastWeather(models.Model):
     response_datetime = models.DateTimeField(verbose_name="Дата и время запроса", auto_now_add=True)
     response_text = models.CharField(max_length=2000, verbose_name="Полный ответ")
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name="Город")
@@ -53,15 +53,13 @@ class Daily(models.Model):
         verbose_name_plural = "Погода за дни"
         ordering = ["date", "city"]
 
-    '''
 
-
-class HourlyWeather(models.Model):
-    response_datetime = models.DateTimeField(verbose_name="Дата и время запроса", auto_now_add=True)
-    response_text = models.CharField(max_length=2000, verbose_name="Ответ сервера")
+class HourlyForecastWeather(models.Model):
+    raw_response_datetime = models.DateTimeField(verbose_name="Дата и время запроса", auto_now_add=True)
+    raw_response = models.CharField(max_length=2000, verbose_name="Ответ сервера")
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name="Город")
 
-    date = models.DateTimeField(verbose_name="Дата")  # original name = time
+    datetime_utc = models.DateTimeField(verbose_name="Дата и время по UTC")  # original name = time
     summary = models.CharField(verbose_name="Текстовое описание", max_length=500)
     icon_name = models.CharField(verbose_name="Название иконки", max_length=100)
 
