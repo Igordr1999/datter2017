@@ -98,13 +98,12 @@ class ForecastApiRequest(object):
         for i in weather.hourly:
             my_date = timezone.datetime.utcfromtimestamp(i.time)
             my_datetime_utc = my_date.replace(tzinfo=timezone.utc)
-            # my_datetime_local = my_datetime_utc.astimezone(tz=pytz.timezone(weather.timezone))
-            # print(i.time,my_date, my_datetime_utc, my_datetime_local, weather.timezone)
+
             # Присваиваем дефолтные значения необязательным атрибутам (precipType и visibility)
             self.give_default_value_hourly(i)
 
             # добавляем или обновляем объект в БД
-            new_data = {'raw_response': weather.hourly._data,
+            new_data = {
                         'summary': i.summary,
                         'icon_name': i.icon,
 
@@ -141,13 +140,13 @@ class ForecastApiRequest(object):
             my_sunset_time = timezone.datetime.utcfromtimestamp(i.sunsetTime).replace(tzinfo=timezone.utc)
 
             # Получаем ссылки на периоды этого дня (часы: 0-3-6-9-12-15-18-21)
-            my_list = self.research_daily_forecast()
+            my_list = self.research_daily_forecast(my_date=my_datetime_utc)
 
             # Присваиваем дефолтные значения необязательным атрибутам (precipType и visibility)
             self.give_default_value_daily(i)
 
             # добавляем или обновляем объект в БД
-            new_data = {'raw_response': weather.daily._data,
+            new_data = {
                         'summary': i.summary,
                         'icon_name': i.icon,
 
@@ -191,18 +190,19 @@ class ForecastApiRequest(object):
                 defaults=new_data,
             )
 
-    def research_daily_forecast(self):
+    def get_or_last(self, datetime_utc):
         hourly_forecast = HourlyForecastWeather.objects.filter(city=self.city)
-        timezone_id = self.city.time_zone.timeZoneName
-        timezone_offset = self.city.time_zone.rawOffset
+        try:
+            return HourlyForecastWeather.objects.get(city=self.city, datetime_utc=datetime_utc)
+        except HourlyForecastWeather.DoesNotExist:
+            return hourly_forecast.last()
 
-        today_date = date.today()
-        today = datetime(day=today_date.day,
-                         month=today_date.month,
-                         year=today_date.year,
-                         tzinfo=timezone.utc)
+    def research_daily_forecast(self, my_date):
+        timezone_offset = self.city.time_zone.rawOffset
+        today = my_date + timedelta(days=1)
         date_offset = timedelta(seconds=timezone_offset)
-        # time_xx - время для запроса к БД, XX - часы по UTC
+
+        # time_xx - нужное время для вывода, XX - часы по UTC
         time_0 = today.replace(hour=0) - date_offset
         time_3 = today.replace(hour=3) - date_offset
         time_6 = today.replace(hour=6) - date_offset
@@ -212,12 +212,16 @@ class ForecastApiRequest(object):
         time_18 = today.replace(hour=18) - date_offset
         time_21 = today.replace(hour=21) - date_offset
 
-        info_0 = hourly_forecast.get(datetime_utc=time_0)
-        info_3 = hourly_forecast.get(datetime_utc=time_3)
-        info_6 = hourly_forecast.get(datetime_utc=time_6)
-        info_9 = hourly_forecast.get(datetime_utc=time_9)
-        info_12 = hourly_forecast.get(datetime_utc=time_12)
-        info_15 = hourly_forecast.get(datetime_utc=time_15)
-        info_18 = hourly_forecast.get(datetime_utc=time_18)
-        info_21 = hourly_forecast.get(datetime_utc=time_21)
+        # Если данных пока не хватает для последних часов, заполняем их последний известным часом
+        info_0 = self.get_or_last(time_0)
+        info_3 = self.get_or_last(time_3)
+        info_6 = self.get_or_last(time_6)
+        info_9 = self.get_or_last(time_9)
+        info_12 = self.get_or_last(time_12)
+        info_15 = self.get_or_last(time_15)
+        info_18 = self.get_or_last(time_18)
+        info_21 = self.get_or_last(time_21)
+
         return info_0, info_3, info_6, info_9, info_12, info_15, info_18, info_21
+
+

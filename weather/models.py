@@ -4,7 +4,6 @@ from data.models import City
 
 class HourlyForecastWeather(models.Model):
     raw_response_datetime = models.DateTimeField(verbose_name="Дата и время запроса", auto_now_add=True)
-    raw_response = models.CharField(max_length=2000, verbose_name="Ответ сервера")
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name="Город")
 
     datetime_utc = models.DateTimeField(verbose_name="Дата и время по UTC")  # original name = time
@@ -42,7 +41,6 @@ class HourlyForecastWeather(models.Model):
 
 class DailyForecastWeather(models.Model):
     raw_response_datetime = models.DateTimeField(verbose_name="Дата и время запроса", auto_now_add=True)
-    raw_response = models.CharField(max_length=2000, verbose_name="Ответ сервера")
     city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name="Город")
 
     datetime_utc = models.DateTimeField(verbose_name="Дата и время по UTC")  # original name = time
@@ -93,7 +91,7 @@ class DailyForecastWeather(models.Model):
                                          related_name="twenty_one_hours", verbose_name="Прогноз на 21 часов")
 
     def __str__(self):
-        return str(self.datetime_utc)
+        return str(str(self.city) + " " + str(self.datetime_utc))
 
     class Meta:
         verbose_name = "Погода на день"
