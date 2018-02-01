@@ -50,5 +50,7 @@ urlpatterns = [
     path('time/<name>/', data_views.time_city, name="time_city"),
     path('time/zone/<path:name>/', data_views.time_timezone, name="time_timezone"),
 
+    # Приложение data. Раздел - weather
     path('weather/<name>/', weather_views.forecast_7days, name="forecast_7days"),
+    path('weather/<name>/<int:day>/<int:month>/<int:year>/', weather_views.forecast_for_day, name="forecast_for_day"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Погода в городе {{ city.name_ru }}</h1>
+<h2>{{ report.datetime_utc }}</h2>
+    <p>Максимум: {{ report.temperatureMax|floatformat:"0" }}</p>
+    <p>Минимум: {{ report.temperatureMin|floatformat:"0" }}</p>
+    <p>0 часов: {{ report.situation_0.temperature|floatformat:"0" }}</p>
+    <p>3 часов: {{ report.situation_3.temperature|floatformat:"0" }}</p>
+    <p>6 часов: {{ report.situation_6.temperature|floatformat:"0" }}</p>
+    <p>9 часов: {{ report.situation_9.temperature|floatformat:"0" }}</p>
+    <p>12 часов: {{ report.situation_12.temperature|floatformat:"0" }}</p>
+    <p>15 часов: {{ report.situation_15.temperature|floatformat:"0" }}</p>
+    <p>18 часов: {{ report.situation_18.temperature|floatformat:"0" }}</p>
+    <p>21 часов: {{ report.situation_21.temperature|floatformat:"0" }}</p>
+</body>
+</html>

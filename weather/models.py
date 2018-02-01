@@ -55,8 +55,8 @@ class DailyForecastWeather(models.Model):
     precipProbability = models.FloatField(verbose_name="Вероятность осадков")
     precipType = models.CharField(verbose_name="Тип осадков", max_length=100, default="NO DATA")
 
-    temperatureHigh = models.FloatField(verbose_name="Наибольшая температура")
-    temperatureLow = models.FloatField(verbose_name="Наименьшая температура")
+    temperatureMax = models.FloatField(verbose_name="Наибольшая температура")
+    temperatureMin = models.FloatField(verbose_name="Наименьшая температура")
     apparentTemperatureHigh = models.FloatField(verbose_name="RealFeel max")
     apparentTemperatureLow = models.FloatField(verbose_name="RealFeel min")
 

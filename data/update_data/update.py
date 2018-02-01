@@ -158,8 +158,8 @@ class ForecastApiRequest(object):
                         'precipProbability': i.precipProbability,
                         'precipType': self.my_precip_type,
 
-                        'temperatureHigh': i.temperatureHigh,
-                        'temperatureLow': i.temperatureLow,
+                        'temperatureHigh': i.temperatureMax,
+                        'temperatureLow': i.temperatureMin,
                         'apparentTemperatureHigh': i.apparentTemperatureHigh,
                         'apparentTemperatureLow': i.apparentTemperatureLow,
 
@@ -184,6 +184,7 @@ class ForecastApiRequest(object):
                         'situation_18': my_list[6],
                         'situation_21': my_list[7],
                         }
+            print(my_datetime_utc, i.temperatureHigh, i.temperatureLow, i.time)
             DailyForecastWeather.objects.update_or_create(
                 city=city,
                 datetime_utc=my_datetime_utc,
@@ -224,4 +225,18 @@ class ForecastApiRequest(object):
 
         return info_0, info_3, info_6, info_9, info_12, info_15, info_18, info_21
 
+    def get_today_local(self, city):
+        now_utc = datetime.now(tz=timezone.utc)
+        timezone_offset = city.time_zone.rawOffset
+        now_local = now_utc - timedelta(seconds=timezone_offset)
+        return now_local
 
+    def get_7_coming_day(self, city):
+        first_day = self.get_today_local(city=city)
+        second_day = first_day + timedelta(days=1)
+        third_day = first_day + timedelta(days=2)
+        four_day = first_day + timedelta(days=3)
+        five_day = first_day + timedelta(days=4)
+        six_day = first_day + timedelta(days=5)
+        seven_day = first_day + timedelta(days=6)
+        return first_day, second_day, third_day, four_day, five_day, six_day, seven_day
