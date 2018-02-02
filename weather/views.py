@@ -1,8 +1,8 @@
-from django.shortcuts import render
-from .models import HourlyForecastWeather, DailyForecastWeather
-from data.update_data.update import ForecastApiRequest
+from django.shortcuts import render, get_object_or_404
+from django.http import Http404
+from .models import DailyForecastWeather
 from data.models import City
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 from django.utils import timezone
 
 
@@ -13,7 +13,7 @@ def from_utc_to_local(few_day, timezone_offset):
 
 
 def forecast_7days(request, name):
-    city = City.objects.get(name_en=name)
+    city = get_object_or_404(City, name_en=name)
     timezone_offset = city.time_zone.rawOffset
 
     now_utc = datetime.now(tz=timezone.utc)
@@ -58,11 +58,14 @@ def forecast_7days(request, name):
 
 
 def forecast_for_day(request, name, day, month, year):
-    city = City.objects.get(name_en=name)
-    now_utc = datetime(day=day, month=month, year=year, tzinfo=timezone.utc)
+    city = get_object_or_404(City, name_en=name)
+    try:
+        now_utc = datetime(day=day, month=month, year=year, tzinfo=timezone.utc)
+    except ValueError:
+        raise Http404
     timezone_offset = city.time_zone.rawOffset
     now_local = now_utc - timedelta(seconds=timezone_offset)
-    report = DailyForecastWeather.objects.get(datetime_utc=now_local)
+    report = get_object_or_404(DailyForecastWeather, datetime_utc=now_local)
     report = from_utc_to_local(few_day=report, timezone_offset=timezone_offset)
 
     return render(request, 'weather/forecast_for_day.html', {

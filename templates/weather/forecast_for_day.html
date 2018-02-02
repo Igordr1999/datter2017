@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Погода в городе {{ city.name_ru }}</h1>
-<h2>{{ report.datetime_utc }}</h2>
+<h2>{{ report.datetime_utc|date }}</h2>
     <p>Максимум: {{ report.temperatureMax|floatformat:"0" }}</p>
     <p>Минимум: {{ report.temperatureMin|floatformat:"0" }}</p>
     <p>0 часов: {{ report.situation_0.temperature|floatformat:"0" }}</p>

@@ -7,15 +7,18 @@
 <body>
 <h1>Город {{ city.name_ru }}</h1>
 {% for day in all_days %}
-    <h2>{{ day.datetime_utc }}</h2>
+    <h2>
+<a href="
+{% url 'forecast_for_day' city.name_en day.datetime_utc.day day.datetime_utc.month day.datetime_utc.year %}
+">{{ day.datetime_utc|date }}</a>
+    </h2>
     <p>{{ day.summary }}</p>
-    <p>Максимум: {{ day.temperatureMax}}</p>
-    <p>Минимум: {{ day.temperatureMin}}</p>
+    <p>Максимум: {{ day.temperatureMax|floatformat:"0"}}</p>
+    <p>Минимум: {{ day.temperatureMin|floatformat:"0"}}</p>
     <p>Ночью: {{ day.situation_0.temperature|floatformat:"0" }}</p>
     <p>Утром: {{ day.situation_6.temperature|floatformat:"0" }}</p>
     <p>Днем: {{ day.situation_12.temperature|floatformat:"0" }}</p>
     <p>Вечером: {{ day.situation_18.temperature|floatformat:"0" }}</p>
-    <p>Световой день: {{ day.sunriseTime }} - {{ day.sunsetTime }}</p>
 {% endfor %}
 </body>
 </html>
