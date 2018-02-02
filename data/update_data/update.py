@@ -158,8 +158,8 @@ class ForecastApiRequest(object):
                         'precipProbability': i.precipProbability,
                         'precipType': self.my_precip_type,
 
-                        'temperatureHigh': i.temperatureMax,
-                        'temperatureLow': i.temperatureMin,
+                        'temperatureMax': i.temperatureMax,
+                        'temperatureMin': i.temperatureMin,
                         'apparentTemperatureHigh': i.apparentTemperatureHigh,
                         'apparentTemperatureLow': i.apparentTemperatureLow,
 
@@ -184,7 +184,6 @@ class ForecastApiRequest(object):
                         'situation_18': my_list[6],
                         'situation_21': my_list[7],
                         }
-            print(my_datetime_utc, i.temperatureHigh, i.temperatureLow, i.time)
             DailyForecastWeather.objects.update_or_create(
                 city=city,
                 datetime_utc=my_datetime_utc,
