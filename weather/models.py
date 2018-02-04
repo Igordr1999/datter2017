@@ -74,21 +74,21 @@ class DailyForecastWeather(models.Model):
 
     # situation_XX - Ситуация на XX часов по местному времени (ссылка на этот час по UTC)
     situation_0 = models.ForeignKey(HourlyForecastWeather, on_delete=models.CASCADE,
-                                   related_name="zero_hours", verbose_name="Прогноз на 0 часов")
+                                    related_name="zero_hours", verbose_name="Прогноз на 0 часов")
     situation_3 = models.ForeignKey(HourlyForecastWeather, on_delete=models.CASCADE,
                                     related_name="three_hours", verbose_name="Прогноз на 3 часов")
     situation_6 = models.ForeignKey(HourlyForecastWeather, on_delete=models.CASCADE,
-                                  related_name="six_hours", verbose_name="Прогноз на 6 часов")
+                                    related_name="six_hours", verbose_name="Прогноз на 6 часов")
     situation_9 = models.ForeignKey(HourlyForecastWeather, on_delete=models.CASCADE,
-                                   related_name="nine_hours", verbose_name="Прогноз на 9 часов")
+                                    related_name="nine_hours", verbose_name="Прогноз на 9 часов")
     situation_12 = models.ForeignKey(HourlyForecastWeather, on_delete=models.CASCADE,
                                      related_name="twelve_hours", verbose_name="Прогноз на 12 часов")
     situation_15 = models.ForeignKey(HourlyForecastWeather, on_delete=models.CASCADE,
-                                      related_name="fifteen_hours", verbose_name="Прогноз на 15 часов")
+                                     related_name="fifteen_hours", verbose_name="Прогноз на 15 часов")
     situation_18 = models.ForeignKey(HourlyForecastWeather, on_delete=models.CASCADE,
-                                       related_name="eighteen_hours", verbose_name="Прогноз на 18 часов")
+                                    related_name="eighteen_hours", verbose_name="Прогноз на 18 часов")
     situation_21 = models.ForeignKey(HourlyForecastWeather, on_delete=models.CASCADE,
-                                         related_name="twenty_one_hours", verbose_name="Прогноз на 21 часов")
+                                     related_name="twenty_one_hours", verbose_name="Прогноз на 21 часов")
 
     def __str__(self):
         return str(str(self.city) + " " + str(self.datetime_utc))
@@ -97,4 +97,3 @@ class DailyForecastWeather(models.Model):
         verbose_name = "Погода на день"
         verbose_name_plural = "Погода на дни"
         ordering = ["city", "datetime_utc"]
-
