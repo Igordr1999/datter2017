@@ -1,0 +1,14 @@
+<!-- profile.html -->
+
+{{ alert }}
+<form method="post">
+  {% csrf_token %}
+  {{ user_form.username }}
+    {{ user_form.first_name }}
+    {{ user_form.last_name }}
+    {{ user_form.email }}
+  {{ profile_form.as_p }}
+  <button type="submit">Сохранить изменения</button>
+</form>
+
+<a href="{% url 'logout' %}">Выйти</a>

@@ -92,7 +92,11 @@
             </div>
             <div class="uk-navbar-right">
                 <ul class="uk-navbar-nav">
-                    <li><a href="#" class="uk-icon-link" uk-icon="icon: sign-in">Войти / Регистрация</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'upgrade' %}" class="uk-icon-link" uk-icon="icon: user">{{ user.username }}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}" class="uk-icon-link" uk-icon="icon: sign-in">Войти / Регистрация</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

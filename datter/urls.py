@@ -21,12 +21,18 @@ from home import views as home_views
 from currency import views as currency_views
 from data import views as data_views
 from weather import views as weather_views
+from security import views as security_views
 from django.conf.urls import include
 
 urlpatterns = [
     # Системные
     path('froala_editor/', include('froala_editor.urls')),
     path('admin/', admin.site.urls),
+
+    # Безопасность сайта
+    path('auth/up/', security_views.update_profile, name="upgrade"),
+    path('auth/login/', security_views.login_profile, name="login"),
+    path('auth/logout/', security_views.logout_profile, name="logout"),
 
     # Приложение home
     path('', home_views.home, name="home"),

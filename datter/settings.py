@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'currency.apps.CurrencyConfig',
     'data.apps.DataConfig',
     'weather.apps.WeatherConfig',
+    'security.apps.SecurityConfig',
 ]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -144,3 +145,6 @@ AWS_S3_HOST = 'hb.bizmrg.com'
 AWS_ACCESS_KEY_ID = 'y1HWpfoxT6EthLDG2FA5Q'
 AWS_SECRET_ACCESS_KEY = '2Dj3xaY1QoEDAi7qr7iKBAuxAKQupzG7duXSoaj9y3QW'
 AWS_STORAGE_BUCKET_NAME = 'datter_main'
+
+LOGIN_URL = "/auth/login/"
+LOGOUT_REDIRECT_URL = "/"
