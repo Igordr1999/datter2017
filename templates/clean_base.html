@@ -9,21 +9,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
         <link rel="shortcut icon" href="{% static 'img/d_logo4.png' %}" type="image/png">
 
-        <!-- UIkit CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.38/css/uikit.min.css" />
-
         <!-- jQuery is required -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+         <!-- UIkit CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.39/css/uikit.min.css" />
         <!-- UIkit JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.38/js/uikit.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.38/js/uikit-icons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.39/js/uikit.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.39/js/uikit-icons.min.js"></script>
 
-        <link href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css" rel="stylesheet" type="text/css" />
-        <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+        <!-- Semantic CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
 
-        <link rel="stylesheet" href="{% static 'css/start.css' %}">
-        <script src="{% static 'js/start.js' %}"></script>
+        <!-- Semantic JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.js"></script>
+
+        <link rel="stylesheet" href="{% static 'css/start1.css' %}">
+
             <!-- Include Editor style. -->
         <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.3/css/froala_editor.min.css' rel='stylesheet' type='text/css' />
         <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.3/css/froala_style.min.css' rel='stylesheet' type='text/css' />
@@ -31,14 +33,42 @@
         <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.3/css/froala_editor.css' rel='stylesheet' type='text/css' />
         <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.3/css/froala_style.css' rel='stylesheet' type='text/css' />
 
-        <!-- Include JS file. -->
         <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.3/js/froala_editor.min.js'></script>
 
+        <!-- Highcharts -->
         <script src="https://code.highcharts.com/stock/highstock.js"></script>
         <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
+        <!-- Air-datepicker -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/air-datepicker/2.2.3/js/datepicker.min.js"></script>
     {% endblock %}
 </head>
 <body>
-    {% block body %}
-    {% endblock %}
+
+{% block body %}
+{% endblock %}
+
+{% if alert_success %}
+    <script>
+        UIkit.notification('{{ alert_success }}', 'success');
+    </script>
+{% endif %}
+
+{% if alert_warning %}
+    <script>
+        UIkit.notification('{{ alert_warning }}', 'warning');
+    </script>
+{% endif %}
+
+{% if alert_danger %}
+    <script>
+        UIkit.notification('{{ alert_danger }}', 'danger');
+    </script>
+{% endif %}
+
+{% if alert_primary %}
+    <script>
+        UIkit.notification('{{ alert_primary }}', 'primary');
+    </script>
+{% endif %}
 </body>

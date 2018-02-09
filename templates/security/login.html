@@ -1,0 +1,52 @@
+{% extends 'clean_base.html' %}
+{% load static %}
+
+{% block body %}
+<div class="uk-background-cover" style="background-image: url({% static 'img/back1.jpg' %}); background-attachment: fixed; height: 100%;">
+	<div class="uk-container">
+		<div class="uk-card uk-card-default uk-width-1-1@m uk-align-center" id="login_card">
+	    	<div class="uk-card-header">
+	        	<div uk-grid>
+	            	<div class="uk-width-auto">
+	                	<a href="#"><img width="135" height="45" src="{% static 'img/d_logo3.png' %}"></a>
+	            	</div>
+	            	<div class="uk-card-badge uk-label">Авторизация</div>
+	        	</div>
+	    	</div>
+	    	<div class="uk-card-body">
+				<form id="login_form" method="post">
+                    {% csrf_token %}
+			    	<div class="uk-margin">
+			        	<div class="uk-inline">
+			            	<span class="uk-form-icon" uk-icon="icon: user"></span>
+			            	<input class="uk-input uk-form-width-large" id="login" type="text" name="username" placeholder="Логин" autofocus>
+			        	</div>
+			    	</div>
+
+			    	<div class="uk-margin">
+			        	<div class="uk-inline">
+			            	<span class="uk-form-icon" uk-icon="icon: lock"></span>
+			            	<input class="uk-input uk-form-width-large" id="password" type="password" name="password" placeholder="Пароль">
+			        	</div>
+			    	</div>
+
+					<button class="uk-button uk-button-primary uk-width-1-1">Войти</button>
+				</form>
+				<div class="uk-margin">
+					<div class="uk-inline uk-align-left login_link">
+						<a href="#">Не могу войти</a>
+					</div>
+
+					<div class="uk-inline uk-align-right login_link">
+						<a href="#">Регистрация</a>
+					</div>
+				</div>
+
+	    	</div>
+	    	<div class="uk-card-footer uk-text-center">
+	        	<a href="#" class="uk-button uk-button-text">Вернуться на сайт</a>
+	    	</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

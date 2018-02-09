@@ -1,0 +1,107 @@
+{% extends 'clean_base.html' %}
+{% load static %}
+{% block body %}
+<img src="http://tachyons.io/img/cat-720.jpg" alt="" uk-cover style="position: fixed">
+    <div class="uk-container">
+        <div class="uk-card uk-card-default uk-width-1-1@m uk-align-center uk-margin-top uk-margin-bottom" id="reg_card">
+            <div class="uk-card-header">
+                <div uk-grid>
+                    <div class="uk-width-auto">
+                        <a href="{% url 'home' %}"><img width="135" height="45" src="{% static 'img/d_logo3.png'%}"></a>
+                    </div>
+                    <div class="uk-card-badge uk-label">Обновление настроек</div>
+                </div>
+            </div>
+            <div class="uk-card-body">
+                <form id="reg_form" method="post" class="ui form">
+                    {% csrf_token %}
+                    {% for hidden in user_form.hidden_fields %}
+                        {{ hidden }}
+                    {% endfor %}
+
+                    <div class="field">
+                        <label>Имя и фамилия</label>
+                        <div class="two fields">
+                            <div class="field">
+                            <input type="text" name="{{ user_form.first_name.name}}" placeholder="Имя"
+                                   value="{{ user_form.first_name.value }}">
+                            </div>
+
+                            <div class="field">
+                                <input type="text" name="{{ user_form.last_name.name}}" placeholder="Фамилия"
+                                   value="{{ user_form.last_name.value }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Пол и дата рождения</label>
+                        <div class="two fields">
+                            <div class="field">
+                                <select class="ui dropdown" name="{{ profile_form.sex.name}}">
+                                    <option value="">Пол</option>
+                                    {% for i in profile_form.sex %}
+                                        {{ i }}
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="field">
+                               {{ profile_form.birth_date }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                            <label>Email</label>
+                            <input type="email" name="{{ user_form.email.name}}" placeholder="Email"
+                                     value="{{ user_form.email.value }}">
+                        </div>
+
+                    <div class="field">
+                            <label>Никнейм</label>
+                            <input type="text" name="{{ user_form.username.name }}" placeholder="Email"
+                                     value="{{ user_form.username.value }}">
+                        </div>
+
+                    <div class="field">
+                            <label>Основной город</label>
+                            <select class="ui search dropdown" name="{{ profile_form.location.name}}">
+                                <option value="">Пол</option>
+                                {% for i in profile_form.location %}
+                                    {{ i }}
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                    <button class="ui green button fluid">Обновить настройки</button>
+                </form>
+
+                <div class="uk-margin">
+                    <div class="uk-inline uk-align-left login_link">
+                        <a href="#">Нужна помощь?</a>
+                    </div>
+
+                    <div class="uk-inline uk-align-right login_link">
+                        <a href="">Хочу изменить пароль</a>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-card-footer uk-text-center">
+                <a href="{% url 'home' %}" class="uk-button uk-button-text">Вернуться на сайт</a>
+            </div>
+        </div>
+    </div>
+
+    <script>$('.ui.dropdown').dropdown();</script>
+    <script>
+        var l = new Date();
+        var r = new Date();
+        l.setDate(l.getDate()-5844);  //16 лет
+        r.setDate(r.getDate()-36525); //100 лет
+        $('#id_{{ profile_form.birth_date.name }}').datepicker({
+            minDate: r,
+            maxDate: l,
+        })
+    </script>
+{% endblock %}
